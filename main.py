@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from datetime import datetime
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
 
 app=FastAPI()
 
@@ -20,3 +21,7 @@ def get_heat_pump():
 def put_heat_pump(pump: HeatPump):
     global heat_pump
     heat_pump = pump
+
+app.mount(
+    "/", StaticFiles(directory=".", html=True)
+)
