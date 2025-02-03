@@ -2,8 +2,8 @@
 <html>
     <body>
         <div>Name:<input id="name" type = "text" > </div>
-        <div>Serial Number:<input id="serialNum" type = "number" min="0"> </div>
-        <div>Install Date:<input id="date" type = "date"> </div>
+        <div>Serial Number:<input id="serial_num" type = "number" min="0"> </div>
+        <div>Install Date:<input id="install_date" type = "date"> </div>
         <div>
             <input 
             value="Load" 
@@ -34,16 +34,16 @@
             const json = await response.json();
             console.log(json);
             document.getElementById("name").value=json["name"];
-            document.getElementById("serialNum").value=json["serialNum"];
-            document.getElementById("date").value=json["date"];
+            document.getElementById("serial_num").value=json["serial_num"];
+            document.getElementById("install_date").value=json["install_date"];
         }
         async function save_heat_pump()
         {
             console.log("saving pump");
             const heatpump = {
                 "name": document.getElementById("name").value,
-                "serialNum": document.getElementById("serialNum").value,
-                "date": document.getElementById("date").value,
+                "serial_num": document.getElementById("serial_num").value,
+                "install_date": document.getElementById("install_date").value,
             };
             console.log(heatpump);
             const request = new Request(
@@ -60,10 +60,10 @@
         async function clear_heat_pump()
         {
             console.log("clearing entity");
-            const request = new Request(
-                "/heat_pump", {method:"DELETE"}
-            );
-            const response = await fetch(request);
+            document.getElementById("name").value = "";
+            document.getElementById("serial_num").value = "";
+            document.getElementById("install_date").value = "";
+
         }
     </script>
 </html>
