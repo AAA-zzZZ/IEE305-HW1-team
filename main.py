@@ -28,9 +28,6 @@ def get_heat_pump() ->HeatPump:
 def put_heat_pump(pump: HeatPump):
     app.heat_pump = pump
 
-@app.delete("/heat_pump")
-def delete_heat_pump():
-    app.heat_pump = None
 
 app.mount(
     "/", StaticFiles(directory=".", html=True)
