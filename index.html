@@ -1,8 +1,69 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <p>
+        <div>Name:<input id="name" type = "text" > </div>
+        <div>Serial Number:<input id="serial_num" type = "number" min="0"> </div>
+        <div>Install Date:<input id="install_date" type = "date"> </div>
+        <div>
+            <input 
+            value="Load" 
+            type="button"
+            onclick="load_heat_pump()">
             
-        </p>
+            <input 
+            value="Save" 
+            type="button"
+            onclick = "save_heat_pump()">
+
+
+            <input 
+            value="Clear" 
+            type="button", 
+            onclick = "clear_heat_pump()">
+        </div>
     </body>
+    <script>
+        async function load_heat_pump()
+        {
+            console.log("loading pump");
+            const request = new Request(
+                "/heat_pump", {method:"GET"}
+            );
+            const response = await fetch(request);
+            console.log(response);
+            const json = await response.json();
+            console.log(json);
+            document.getElementById("name").value=json["name"];
+            document.getElementById("serial_num").value=json["serial_num"];
+            document.getElementById("install_date").value=json["install_date"];
+        }
+        async function save_heat_pump()
+        {
+            console.log("saving pump");
+            const heatpump = {
+                "name": document.getElementById("name").value,
+                "serial_num": document.getElementById("serial_num").value,
+                "install_date": document.getElementById("install_date").value,
+            };
+            console.log(heatpump);
+            const request = new Request(
+                "/heat_pump",
+                {
+                    "method": "PUT",
+                    "headers":{"Content-Type": "application/json"},
+                    "body": JSON.stringify(heatpump)
+                }
+            );
+            const response = await fetch(request);
+            console.log(response);
+        }
+        async function clear_heat_pump()
+        {
+            console.log("clearing entity");
+            document.getElementById("name").value = "";
+            document.getElementById("serial_num").value = "";
+            document.getElementById("install_date").value = "";
+
+        }
+    </script>
 </html>
